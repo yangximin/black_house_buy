@@ -18,6 +18,19 @@
 
 		}
 	],
+	"subPackages": [{
+		"root": "subpkg",
+		"pages": [
+
+			{
+				"path": "goods_detail/goods_detail",
+				"style": {
+					"enablePullDownRefresh": false
+				}
+
+			}
+		]
+	}],
 	"tabBar": {
 		"selectedColor": "#c00000",
 		"list": [{
