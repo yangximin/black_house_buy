@@ -13,7 +13,7 @@ $http.afterRequest = function(options) {
 	uni.hideLoading()
 }
 
-uni.$showMsg = function(title = "数据加载失败！", duration = 1500) {
+uni.$showMsg = function({title = "数据加载失败！", duration = 1500}) {
 	uni.showToast({
 		title,
 		duration,
