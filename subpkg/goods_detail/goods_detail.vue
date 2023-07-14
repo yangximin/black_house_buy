@@ -1,6 +1,6 @@
 <template>
 	<view>
-		
+
 	</view>
 </template>
 
@@ -8,8 +8,13 @@
 	export default {
 		data() {
 			return {
-				
+
 			};
+		},
+		props: {
+			goods_id: {
+				type: String
+			}
 		}
 	}
 </script>

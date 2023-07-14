@@ -17,7 +17,7 @@
 			"style": {}
 
 		}
-    ],
+	],
 	"subPackages": [{
 		"root": "subpkg",
 		"pages": [
@@ -25,20 +25,27 @@
 			{
 				"path": "goods_detail/goods_detail",
 				"style": {
+					"enablePullDownRefresh": false,
+					"navigationBarTitleText": "商品详情"
+				}
+
+			}, {
+				"path": "goods_list/goods_list",
+				"style": {
+					"navigationBarTitleText": "商品列表",
+					"enablePullDownRefresh": true,
+					"onReachBottomDistance": 150
+				}
+
+			}, {
+				"path": "search/search",
+				"style": {
+					"navigationBarTitleText": "搜索页",
 					"enablePullDownRefresh": false
 				}
 
 			}
-		    ,{
-                    "path" : "goods_list/goods_list",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
+		]
 	}],
 	"tabBar": {
 		"selectedColor": "#c00000",
@@ -71,4 +78,6 @@
 		"backgroundColor": "#FFFFFF"
 	},
 	"uniIdRouter": {}
+
+
 }

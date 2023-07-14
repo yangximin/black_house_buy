@@ -1,25 +1,28 @@
 <template>
-	<view class="cate-view">
-		<scroll-view class="scroll-menu-view" :style="{height:wh+'px'}" scroll-y scroll-bar="none">
-			<view class="menu-view" :class="{'active':selectMenu===index}" v-for="(item,index) in cateList" :key="index"
-				@click="menuClick(item,index)">
-				{{item.cat_name}}
-			</view>
-		</scroll-view>
-		<scroll-view class="scroll-content-view" :style="{height:wh+'px'}" scroll-y :scroll-top="scrollTop + 'px'">
-			<view class=" content-view" v-for="(item,index) in itemContent" :key="index">
-				<view class="content-title">
-					/ {{item.cat_name}} /
+	<view class="">
+		<my-search @myClick="goSearch()"></my-search>
+		<view class="cate-view">
+			<scroll-view class="scroll-menu-view" :style="{height:wh+'px'}" scroll-y scroll-bar="none">
+				<view class="menu-view" :class="{'active':selectMenu===index}" v-for="(item,index) in cateList"
+					:key="index" @click="menuClick(item,index)">
+					{{item.cat_name}}
 				</view>
-				<view class="content-list">
-					<view class="content-list-item" v-for="(subItem,subIndex) in item.children" :key="subIndex"
-						@click="gotoDetail(subItem)">
-						<image :src="subItem.cat_icon"></image>
-						<text>{{subItem.cat_name}}</text>
+			</scroll-view>
+			<scroll-view class="scroll-content-view" :style="{height:wh+'px'}" scroll-y :scroll-top="scrollTop + 'px'">
+				<view class=" content-view" v-for="(item,index) in itemContent" :key="index">
+					<view class="content-title">
+						/ {{item.cat_name}} /
+					</view>
+					<view class="content-list">
+						<view class="content-list-item" v-for="(subItem,subIndex) in item.children" :key="subIndex"
+							@click="gotoDetail(subItem)">
+							<image :src="subItem.cat_icon"></image>
+							<text>{{subItem.cat_name}}</text>
+						</view>
 					</view>
 				</view>
-			</view>
-		</scroll-view>
+			</scroll-view>
+		</view>
 	</view>
 </template>
 
@@ -44,7 +47,7 @@
 				// }
 			});
 			console.log(sysInfo);
-			this.wh = sysInfo.windowHeight;
+			this.wh = sysInfo.windowHeight - 50;;
 		},
 		methods: {
 			async getCateList() {
@@ -62,7 +65,12 @@
 			},
 			gotoDetail(item) {
 				uni.navigateTo({
-					url: '/subpkg/goods_list/goods_list?cId='+item.cat_id,
+					url: '/subpkg/goods_list/goods_list?cId=' + item.cat_id,
+				})
+			},
+			goSearch() {
+				uni.navigateTo({
+					url: '/subpkg/search/search'
 				})
 			}
 		}
@@ -81,19 +89,20 @@
 
 	.cate-view {
 		display: flex;
+		font-size: 14px;
 
 		.scroll-menu-view {
-			width: 240rpx;
+			width: 200rpx;
 
 			.menu-view {
 				line-height: 120rpx;
 				text-align: center;
-				font-size: 16px;
 				background-color: #f7f7f7;
 
 				&.active {
 					background-color: white;
 					position: relative;
+					font-weight: 800;
 
 					&::after {
 						display: block;
@@ -112,7 +121,7 @@
 	}
 
 	.scroll-content-view {
-		width: 510rpx;
+		width: 550rpx;
 
 		.content-title {
 			line-height: 80rpx;
@@ -128,7 +137,7 @@
 			.content-list-item {
 				width: 33.33%;
 				height: 0;
-				padding-top: 40%;
+				padding-top: 35%;
 				margin-top: 20rpx;
 				position: relative;
 				text-align: center;
