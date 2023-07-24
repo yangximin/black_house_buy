@@ -18,34 +18,39 @@
 			<view class="goods_delivery">快递-免运费</view>
 		</view>
 		<rich-text :nodes="goods_info.goods_introduce"></rich-text>
-        <view class="goods_nav">
-			<uni-goods-nav :fill="true" :options="options" 
-			:buttonGroup="buttonGroup" @buttonClick="buttonClick"></uni-goods-nav>
-        </view>
+		<view class="goods_nav">
+			<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="optionsClick"
+				@buttonClick="buttonClick"></uni-goods-nav>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations,
+		mapGetters
+	} from 'vuex'
 	export default {
 		data() {
 			return {
 				goods_info: {},
-				options:[{
-					icon:'shop',
-					text:'店铺'
-				},{
-					icon:'cart',
-					text:'购物车',
-					info:2
+				options: [{
+					icon: 'shop',
+					text: '店铺'
+				}, {
+					icon: 'cart',
+					text: '购物车',
+					info: 0
 				}],
-				buttonGroup:[{
-					text:'加入购物车',
-					backgroundColor:'#ff0000',
-					color:'#fff'
-				},{
-					text:'立即购买',
-					backgroundColor:'#ffa200',
-					color:'#fff'
+				buttonGroup: [{
+					text: '加入购物车',
+					backgroundColor: '#ff0000',
+					color: '#fff'
+				}, {
+					text: '立即购买',
+					backgroundColor: '#ffa200',
+					color: '#fff'
 				}]
 
 			};
@@ -53,6 +58,17 @@
 		props: {
 			goods_id: {
 				type: String
+			}
+		},
+		computed: {
+			...mapGetters("m_cart", ['total'])
+		},
+		watch: {
+			total: {
+				handler(newVaule, oldValue) {
+					this.options[1].info = newVaule;
+				},
+				immediate: true,
 			}
 		},
 		onLoad(options) {
@@ -67,7 +83,7 @@
 					goods_id: goodsId
 				});
 				if (res.meta.status !== 200) return uni.$showMsg();
-				res.message.goods_introduce = res.message.goods_introduce.replace(/<img/g ,
+				res.message.goods_introduce = res.message.goods_introduce.replace(/<img/g,
 					'<img style="display:block;"')
 				this.goods_info = res.message;
 			},
@@ -76,7 +92,28 @@
 					current: i,
 					urls: this.goods_info.pics.map(x => x.pics_big)
 				})
-			}
+			},
+			buttonClick(e) {
+				if (e.content.text === '加入购物车') {
+					const goods = {
+						goods_id: this.goods_info.goods_id,
+						goods_name: this.goods_info.goods_name,
+						goods_price: this.goods_info.goods_price,
+						goods_count: 1,
+						goods_small_logo: this.goods_info.goods_small_logo,
+						goods_state: true,
+					}
+					this.addToCart(goods);
+				}
+			},
+			optionsClick(e) {
+				if (e.content.text === "购物车") {
+					uni.switchTab({
+						url: '/pages/cart/cart'
+					})
+				}
+			},
+			...mapMutations('m_cart', ['addToCart'])
 		}
 	}
 </script>
@@ -128,7 +165,8 @@
 			clear: both;
 		}
 	}
-	.goods_nav{
+
+	.goods_nav {
 		position: fixed;
 		bottom: 0;
 		left: 0;

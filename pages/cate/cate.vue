@@ -64,8 +64,9 @@
 				this.scrollTop = this.scrollTop === 0 ? "1" : 0;
 			},
 			gotoDetail(item) {
+				// console.log('/subpkg/goods_list/goods_list?cid=' + item.cat_id);
 				uni.navigateTo({
-					url: '/subpkg/goods_list/goods_list?cId=' + item.cat_id,
+					url: '/subpkg/goods_list/goods_list?cid=' + item.cat_id,
 				})
 			},
 			goSearch() {

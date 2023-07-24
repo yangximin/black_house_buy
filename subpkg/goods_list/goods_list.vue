@@ -1,9 +1,7 @@
 <template>
-	<view>
-		<view class="goods-list">
-			<view @click="gotodetail(item)" v-for="(item,index) in goodsList" :key="index">
-				<my-goods class="goods-item" :item="item"></my-goods>
-			</view>
+	<view class="goods-list">
+		<view @click="gotodetail(item)" v-for="(item,index) in goodsList" :key="index">
+			<my-goods :item="item" :showRadio="false"></my-goods>
 		</view>
 	</view>
 </template>
@@ -24,7 +22,8 @@
 			};
 		},
 		onLoad(options) {
-			this.queryObj.cid = options.query || '';
+			// console.log(options);
+			this.queryObj.cid = options.cid || '';
 			this.queryObj.query = options.query || '';
 			this.getGoodsList();
 		},
@@ -77,12 +76,5 @@
 </script>
 
 <style lang="scss">
-	.goods-item {
-		display: flex;
-		height: 240rpx;
-		margin: 20rpx;
-		padding: 20rpx 0;
-		box-sizing: border-box;
-		border-bottom: 1px solid #ccc;
-	}
+
 </style>
